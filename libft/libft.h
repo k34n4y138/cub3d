@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:55:36 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/07/29 17:33:18 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/07/31 01:06:25 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ char	*get_next_line(int fd);
 int		ft_strnmltcmp(char	*str, char	*mltcmp, char deli, size_t len);
 void	ft_strlstfree(char **lst);
 char	*ft_strjoin_free(char *s1, char *s2, int f1, int f2);
+void	ft_errmsg(char *msg, int status);
 #endif

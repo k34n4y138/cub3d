@@ -50,6 +50,7 @@ SRCS	=	ft_atoi.c \
 			ft_strlstfree.c \
 			ft_strnmltcmp.c \
 			ft_strjoin_free.c \
+			ft_errmsg.c \
 
 OBJS	=	$(patsubst %.c,%.o,$(SRCS))
 

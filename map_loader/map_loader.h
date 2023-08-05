@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   map_loader.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/29 17:29:00 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/05 23:20:00 by zmoumen          ###   ########.fr       */
+/*   Created: 2023/07/30 22:54:44 by zmoumen           #+#    #+#             */
+/*   Updated: 2023/07/31 17:19:50 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "common.h"
-#include "map_loader/map_loader.h"
-#include <stdio.h>
+#ifndef MAP_LOADER_H
+# define MAP_LOADER_H
+# define BLOC_SIZE 10
+# include <stdint.h>
+# include <stdlib.h>
+# include "t_map.h"
 
-int	main(int ac, char **av)
-{
-	t_game	game;
-	t_map	map;
-
-	if (ac != 2)
-		ft_errmsg("Please provide one map[.ber] file", 1);
-	map = load_map(av[1]);
-	ft_bzero(&game, sizeof(t_game));
-	game.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, WIN_TITLE, false);
-	(void)game;
-	mlx_loop(game.mlx);
-	return (0);
-}
+t_map	load_map(char	*fpath);
+#endif

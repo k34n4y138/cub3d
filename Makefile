@@ -6,13 +6,13 @@
 #    By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/30 21:42:20 by zmoumen           #+#    #+#              #
-#    Updated: 2023/07/30 21:56:00 by zmoumen          ###   ########.fr        #
+#    Updated: 2023/08/05 20:14:10 by zmoumen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #~~~~~~~~~~~~~~[COMPILER]~~~~~~~~~~~~~~
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -I./mlx42/include/MLX42 -I./libft
 
 NAME = cub3D
 all: $(NAME)
@@ -22,7 +22,9 @@ SHELL = /bin/bash
 #~~~~~~~~~~~~~~
 
 #~~~~~~~~~~~~~~[SOURCE FILES]~~~~~~~~~~~~~~
-SRC = main.c
+SRC_MP_LDR = map_loader.c map_utils.c parse_matrix.c textures_utils/load_textures.c textures_utils/parse_textures.c
+
+SRC = main.c $(addprefix map_loader/, $(SRC_MP_LDR))
 #~~~~~~~~~~~~~~
 
 #~~~~~~~~~~~~~~[COMPILER OBJ/DEP FILES]~~~~~~~~~~~~~~
@@ -54,7 +56,7 @@ endif
 
 clone_mlx: $(MLX_CMAKE)
 
- $(MLX):
+ $(MLX): $(GLFW)
 	@if [ ! -d mlx42 ]; then echo "📛  MLX42 not cloned"; echo "🛂  Call make clone_mlx first"; exit 1; fi
 	@echo "🏭🏗 Building MLX42"
 	@cmake -Bmlx42/build -Hmlx42 > /dev/null
@@ -104,8 +106,9 @@ libft_re: libft_clean libft
 #~~~~~~~~~~~~~~
 
 #~~~~~~~~~~~~~~[CUB3D]~~~~~~~~~~~~~~
-$(NAME): $(MLX) $(LIBFT) $(OBJ)
+$(NAME): $(MLX_CMAKE) $(MLX) $(GLFW) $(LIBFT) $(OBJ)
 	@echo "🏭🏗 Building executable"
+	@echo "📦 linking with $(GLFW)"
 	@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBFT) $(GLFW) -o $@
 	@echo "✅🎮 Ready to Play"
 

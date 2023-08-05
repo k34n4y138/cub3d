@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 17:36:52 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/07/30 01:40:21 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/05 23:13:19 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@
 # define WIN_HEIGHT 800
 # define WIN_TITLE "Cub3D"
 
-
 typedef struct t_game
 {
 	mlx_t	*mlx;
-
 }			t_game;
 #endif
