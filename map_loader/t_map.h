@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 00:55:29 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/05 23:02:43 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/11 00:36:03 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_map
 {
 	size_t			f_lcount;
 	size_t			m_lcount;
+	size_t			m_width;
 	char			*_tx_paths[7];
 	mlx_image_t		*textures[6];
 	char			**matrix;

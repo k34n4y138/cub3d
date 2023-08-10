@@ -6,13 +6,13 @@
 #    By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/30 21:42:20 by zmoumen           #+#    #+#              #
-#    Updated: 2023/08/05 20:14:10 by zmoumen          ###   ########.fr        #
+#    Updated: 2023/08/10 20:08:10 by zmoumen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #~~~~~~~~~~~~~~[COMPILER]~~~~~~~~~~~~~~
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I./mlx42/include/MLX42 -I./libft
+CFLAGS = -Wall -Werror -Wextra -I./mlx42/include/MLX42 -I./libft #-fsanitize=address -g3
 
 NAME = cub3D
 all: $(NAME)
@@ -130,6 +130,8 @@ clean:
 fclean: clean rm_mlx libft_clean
 	@echo "🚮  Removing executable and cleaning up libraries"
 	@rm -rf $(NAME)
+
+re_source_only: clean all
 
 re: fclean all
 

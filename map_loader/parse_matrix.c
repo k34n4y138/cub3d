@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:21:45 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/05 23:17:27 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/11 00:37:59 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,21 @@ void	validate_matrix_line(char	*mline, size_t lcount)
 	}
 }
 
-void	set_player(t_map *map, size_t	x, size_t y, char dir)
+void	set_player(t_map *map, size_t	x, size_t y, char **pos)
 {
 	if (map->player.x != 0)
 		ft_errmsg("Duplicate player position", 1);
 	map->player.x = x;
 	map->player.y = y;
-	if (dir == 'E')
+	if (**pos == 'E')
 		map->player.dir = 0;
-	else if (dir == 'N')
+	else if (**pos == 'N')
 		map->player.dir = 90;
-	else if (dir == 'W')
+	else if (**pos == 'W')
 		map->player.dir = 180;
-	else if (dir == 'S')
+	else if (**pos == 'S')
 		map->player.dir = 270;
+	**pos = '0';
 }
 
 void	matrix_error(size_t y, size_t x, char *msg, t_map *map)
@@ -85,7 +86,7 @@ void	validate_matrix_maze(t_map *map)
 			|| map->matrix[y][x - 1] == ' ' || map->matrix[y][x + 1] == ' '))
 				matrix_error(y, x, "Map should be surrounded by walls", map);
 			if (ft_strchr("NSEW", map->matrix[y][x++]))
-				set_player(map, x, y, map->matrix[y][x]);
+				set_player(map, x, y, map->matrix);
 		}
 		y++;
 	}
@@ -93,7 +94,34 @@ void	validate_matrix_maze(t_map *map)
 		ft_errmsg("No player found", 1);
 }
 
-void	get_matrix(int fd, t_map	*map)
+void	unionize_matrix_width(t_map *map)
+{
+	char		**traverser;
+	size_t		tlen;
+
+	traverser = map->matrix;
+	map->m_width = 0;
+	while (*traverser)
+	{
+		if (map->m_width < ft_strlen(*traverser))
+			map->m_width = ft_strlen(*traverser);
+		traverser++;
+	}
+	traverser = map->matrix;
+	while (*traverser)
+	{
+		tlen = map->m_width - ft_strlen(*traverser);
+		if (tlen > 0)
+			*traverser = ft_strjoin_free(
+					*traverser,
+					ft_memset(ft_calloc(tlen + 1, sizeof(char)), ' ', tlen),
+					1, 1);
+		printf(">%s<\n", *traverser);
+		traverser++;
+	}
+}
+
+void	get_matrix(int fd, t_map *map)
 {
 	char	*line;
 	char	*tmp;
@@ -115,4 +143,5 @@ void	get_matrix(int fd, t_map	*map)
 	map->matrix = ft_split(tmp, '\n');
 	free(tmp);
 	validate_matrix_maze(map);
+	unionize_matrix_width(map);
 }
