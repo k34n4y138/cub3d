@@ -6,13 +6,11 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 01:16:54 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/05 23:17:46 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/11 01:02:29 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "../_map_internal.h"
-#include <stdio.h>
+#include <cub3d.h>
 
 void	_set_texture(char **texture, char *path, size_t lcount, char *key)
 {

@@ -6,13 +6,11 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:21:45 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/11 00:37:59 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/11 01:02:44 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "t_map.h"
-#include <stdio.h>
+#include <cub3d.h>
 
 #define MATRIX_CHARS "01NSEW "
 

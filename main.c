@@ -6,13 +6,11 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 17:29:00 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/05 23:20:00 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/11 01:05:06 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "common.h"
-#include "map_loader/map_loader.h"
-#include <stdio.h>
+#include <cub3d.h>
 
 int	main(int ac, char **av)
 {

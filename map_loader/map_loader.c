@@ -6,16 +6,11 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 20:03:40 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/05 20:10:35 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/11 01:02:22 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map_loader.h"
-#include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-#include "libft.h"
-#include "_map_internal.h"
+#include <cub3d.h>
 
 int	open_cub_file(char	*fpath)
 {

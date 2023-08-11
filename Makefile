@@ -6,13 +6,13 @@
 #    By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/30 21:42:20 by zmoumen           #+#    #+#              #
-#    Updated: 2023/08/10 20:08:10 by zmoumen          ###   ########.fr        #
+#    Updated: 2023/08/11 01:04:35 by zmoumen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #~~~~~~~~~~~~~~[COMPILER]~~~~~~~~~~~~~~
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I./mlx42/include/MLX42 -I./libft #-fsanitize=address -g3
+CFLAGS = -Wall -Werror -Wextra -I./mlx42/include/MLX42 -I./libft -I. #-fsanitize=address -g3
 
 NAME = cub3D
 all: $(NAME)

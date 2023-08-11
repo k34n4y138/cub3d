@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_map.h                                            :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/31 00:55:29 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/11 00:36:03 by zmoumen          ###   ########.fr       */
+/*   Created: 2023/08/11 00:47:12 by zmoumen           #+#    #+#             */
+/*   Updated: 2023/08/11 01:01:55 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef T_MAP_H
-# define T_MAP_H
-# include <stdint.h>
+#ifndef CUB3D_H
+# define CUB3D_H
+
 # include <MLX42.h>
+# include "libft/libft.h"
+# include <stdlib.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <libft.h>
+# include <errno.h>
+# include <string.h>
+# include <stdio.h>
+
+# define WIN_WIDTH 800
+# define WIN_HEIGHT 800
+# define WIN_TITLE "Cub3D"
+# define BLOCK_SIZE 64
+
 
 typedef struct s_player
 {
@@ -43,5 +57,19 @@ typedef struct s_map
 	char			**matrix;
 	t_player		player;
 }				t_map;
+
+
+typedef struct t_game
+{
+	mlx_t	*mlx;
+}			t_game;
+
+
+int		open_cub_file(char *fpath);
+void	get_textures(t_map *map, int fd);
+void	get_matrix(int fd, t_map	*map);
+char	*skip_empty_lines(int fd, size_t *lcount);
+
+t_map	load_map(char	*fpath);
 
 #endif
