@@ -36,8 +36,8 @@ void	handl_recast_horizontal(t_game *cub)
 	init_hor_content(cub);
 	next_hor_x = cub->cast.x_intercept;
 	next_hor_y = cub->cast.y_intercept;
-	while (next_hor_x >= 0 && next_hor_x <= WIN_WIDTH
-		&& next_hor_y >= 0 && next_hor_y <= WIN_HEIGHT)
+	while (next_hor_x >= 0 && next_hor_x <= cub->map.m_width * TILE_SIZE
+		&& next_hor_y >= 0 && next_hor_y <= cub->map.m_lcount * TILE_SIZE)
 	{
 		if (!check_wall(&cub->map, next_hor_x,  next_hor_y - (cub->cast.is_up ? 1 : 0)))
 		{
@@ -90,8 +90,8 @@ void	handl_recast_vertical(t_game *cub)
 	init_ver_content(cub);
 	next_ver_x = cub->cast.x_intercept;
 	next_ver_y = cub->cast.y_intercept;
-	while (next_ver_x >= 0 && next_ver_x <= WIN_WIDTH
-		&& next_ver_y >= 0 && next_ver_y <= WIN_HEIGHT)
+	while (next_ver_x >= 0 && next_ver_x <= cub->map.m_width * TILE_SIZE
+		&& next_ver_y >= 0 && next_ver_y <= cub->map.m_lcount * TILE_SIZE)
 	{
 		if (!check_wall(&cub->map, next_ver_x - (cub->cast.is_left ? 1 : 0), next_ver_y))
 		{

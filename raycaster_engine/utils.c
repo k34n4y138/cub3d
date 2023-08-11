@@ -56,3 +56,4 @@ void	handl_err_pixl(t_game *cub)
 		cub->cast.wal_y -= 1;
 	}
 }
+

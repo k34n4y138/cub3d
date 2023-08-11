@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 20:03:40 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/11 02:57:02 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/12 00:46:13 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ int	open_cub_file(char	*fpath)
 	return (fd);
 }
 
+void print_textures(t_map *map)
+{
+	for (int i = 0; map->_tx_paths[i]; i++)
+		printf("texture[%d]: %s<\n", i, map->_tx_paths[i]);
+}
+
 t_map	load_map(char *fpath)
 {
 	int		fd;
@@ -36,6 +42,8 @@ t_map	load_map(char *fpath)
 	fd = open_cub_file(fpath);
 	ft_bzero(&map, sizeof(t_map));
 	get_textures(&map, fd);
+	print_textures(&map);
+	load_textures(&map);
 	get_matrix(fd, &map);
 	return (map);
 }

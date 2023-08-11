@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:21:45 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/11 02:57:59 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/11 23:49:50 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	set_player(t_map *map, int	x, int y, char **pos)
 {
 	if (map->player.x != 0)
 		ft_errmsg("Duplicate player position", 1);
-	map->player.x = x * BLOCK_SIZE ;
-	map->player.y = y * BLOCK_SIZE ;
+	map->player.x = x * BLOCK_SIZE + (BLOCK_SIZE / 2);
+	map->player.y = y * BLOCK_SIZE + (BLOCK_SIZE / 2);
 	printf("player x: %f, y: %f\n", map->player.x, map->player.y);
 	if (pos[y][x] == 'E')
 		map->player.rorationangle = 2 * M_PI;
@@ -120,7 +120,6 @@ void	unionize_matrix_width(t_map *map)
 					*traverser,
 					ft_memset(ft_calloc(tlen + 1, sizeof(char)), ' ', tlen),
 					1, 1);
-		printf(">%s<\n", *traverser);
 		traverser++;
 	}
 }

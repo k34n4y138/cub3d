@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 00:47:12 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/11 16:40:01 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/12 00:44:46 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 # define TILE_SIZE 64
 
-# define FOV_ANGLE (70 * (M_PI / 180))
+# define FOV_ANGLE (60 * (M_PI / 180))
 
 # define WALL_STRIP_WIDTH 1
 # define NUM_RAYS (WIN_WIDTH / WALL_STRIP_WIDTH)
@@ -109,7 +109,9 @@ typedef struct s_map
 	int				m_lcount;
 	int				m_width;
 	char			*_tx_paths[7];
-	mlx_image_t		*textures[6];
+	mlx_texture_t	*textures[6];
+	uint32_t		floor_c;
+	uint32_t		ceiling_c;
 	char			**matrix;
 	t_player		player;
 }				t_map;
@@ -138,7 +140,7 @@ int		open_cub_file(char *fpath);
 void	get_textures(t_map *map, int fd);
 void	get_matrix(int fd, t_map	*map);
 char	*skip_empty_lines(int fd, int *lcount);
-
+void	load_textures(t_map *map);
 t_map	load_map(char	*fpath);
 
 void	my_keyhook(mlx_key_data_t keydata, void *param);
