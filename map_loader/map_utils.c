@@ -6,16 +6,16 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 00:51:19 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/05 20:10:17 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/11 02:57:02 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*skip_empty_lines(int fd, size_t *lcount)
+char	*skip_empty_lines(int fd, int *lcount)
 {
 	char		*line;
-	size_t		i;
+	int		i;
 
 	line = get_next_line(fd);
 	while (line)

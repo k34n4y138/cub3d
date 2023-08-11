@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 20:03:40 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/11 01:02:22 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/11 02:57:02 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	open_cub_file(char	*fpath)
 {
 	int		fd;
-	size_t	slen;
+	int	slen;
 
 	if (fpath == NULL)
 		ft_errmsg("File path is NULL", 1);

@@ -6,20 +6,20 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 01:16:54 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/11 01:02:29 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/11 02:57:37 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-void	_set_texture(char **texture, char *path, size_t lcount, char *key)
+void	_set_texture(char **texture, char *path, int lcount, char *key)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (*texture != NULL)
 	{
-		printf("Duplicate texture at line %zu\n", lcount);
+		printf("Duplicate texture at line %d\n", lcount);
 		ft_errmsg("Duplicate texture", 1);
 	}
 	while (path[i] && path[i] == ' ')
@@ -29,14 +29,14 @@ void	_set_texture(char **texture, char *path, size_t lcount, char *key)
 		i++;
 	if (path[i] == '\0' || path[i] == '\n')
 	{
-		printf("Invalid texture path at line %zu\n", lcount);
+		printf("Invalid texture path at line %d\n", lcount);
 		ft_errmsg("Invalid texture path", 1);
 	}
 	*texture = ft_substr(path, i, ft_strlen(path + i) - 1);
 	if (ft_strnmltcmp("NO|SO|WE|EA", key, '|', 2) != -1
 		&& ft_strncmp(*texture + ft_strlen(*texture) - 4, ".png", 4) != 0)
 	{
-		printf("Line %zu: isn't ending with [.png]\n", lcount);
+		printf("Line %d: isn't ending with [.png]\n", lcount);
 		ft_errmsg("Textures must be [.png]", 1);
 	}
 }
@@ -60,13 +60,13 @@ void	_validate_texture(char	*line, t_map *map)
 		}
 		j++;
 	}
-	printf("Invalid texture key at line %zu: %s\n", map->f_lcount, line);
+	printf("Invalid texture key at line %d: %s\n", map->f_lcount, line);
 	ft_errmsg("Invalid or incomplete list of textures", 1);
 }
 
 int	line_is_matrix(char *line, t_map *map)
 {
-	size_t	i;
+	int	i;
 
 	(void)map;
 	i = 0;
