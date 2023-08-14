@@ -6,13 +6,13 @@
 #    By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/30 21:42:20 by zmoumen           #+#    #+#              #
-#    Updated: 2023/08/11 04:41:30 by zmoumen          ###   ########.fr        #
+#    Updated: 2023/08/14 20:57:21 by zmoumen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #~~~~~~~~~~~~~~[COMPILER]~~~~~~~~~~~~~~
 CC = cc
-CFLAGS =  -I./mlx42/include/MLX42 -I./libft -I. #-fsanitize=address -g3
+CFLAGS =  -I./mlx42/include/MLX42 -I./libft -I. -Wall -Wextra -Werror 
 
 NAME = cub3D
 all: $(NAME)
@@ -40,7 +40,7 @@ DEPS = $(addprefix $(DEP_DIR)/, $(SRC:.c=.d))
 #~~~~~~~~~~~~~~[MLX AND ITS DEPS]~~~~~~~~~~~~~~
 MLX = mlx42/build/libmlx42.a
 MLX_CMAKE = mlx42/CMakeLists.txt
-GLFW = $(shell brew info glfw | grep -E "Cellar" | cut -d " " -f 1 )/lib/libglfw.dylib
+GLFW = $(shell brew --prefix glfw )/lib/libglfw.dylib
 
 $(GLFW):
 	@echo "📛  Missing glfw library"
@@ -51,9 +51,7 @@ $(MLX_CMAKE):
 	@if [ -d mlx42 ]; then echo "🟠  MLX42 already cloned\n🛂  Call make re_mlx if folder is corrupted\n\n"; exit 1; fi
 	@echo "📡  cloning mlx42"
 	@git clone https://github.com/codam-coding-college/MLX42.git mlx42 --quiet
-ifeq ($(MAKECMDGOALS), clone_mlx)
-	@echo "✅  MLX42 Cloned"
-endif
+
 
 clone_mlx: $(MLX_CMAKE)
 
@@ -61,18 +59,7 @@ clone_mlx: $(MLX_CMAKE)
 	@if [ ! -d mlx42 ]; then echo "📛  MLX42 not cloned"; echo "🛂  Call make clone_mlx first"; exit 1; fi
 	@echo "🏭🏗 Building MLX42"
 	@cmake -Bmlx42/build -Hmlx42 > /dev/null
-	@line_count=0; \
-	while IFS= read -r line; do \
-		((line_count++)); \
-		echo "$$line"; \
-	done < <(make -C mlx42/build); \
-	if [ $(MAKECMDGOALS)"" != mlx ] && [ $(MAKECMDGOALS)"" != build_mlx ] ; then \
-		for (( i=0; i<line_count; i++ )); do \
-			tput cuu1; tput el; \
-		done; \
-	else \
-		echo -n ""; \
-	fi
+	@make -C mlx42/build
 	@echo "✅  MLX42 Built"
 
 build_mlx: $(GLFW) $(MLX)

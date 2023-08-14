@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/05 20:06:43 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/12 00:45:12 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/14 19:33:11 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,16 @@ void	verify_colorline(char *line)
 
 uint32_t	parse_color(char	*tline)
 {
-	uint32_t	color;
 	char		**split;
 	int			rgb[3];
 	int			i;
 
 	verify_colorline(tline);
 	split = ft_split(tline, ',');
+	i = 0;
 	while (split[i])
 	{
+		printf(">>>%s\n", split[i]);
 		if (i > 2)
 			ft_errmsg("Invalid color line", 1);
 		rgb[i] = ft_atoi(split[i]);
@@ -44,6 +45,7 @@ uint32_t	parse_color(char	*tline)
 		i++;
 	}
 	ft_strlstfree(split);
+	printf("%d, %d, %d\n", rgb[0], rgb[1], rgb[2]);
 	return (ft_pixel(rgb[0], rgb[1], rgb[2], 255));
 }
 
@@ -58,10 +60,10 @@ mlx_texture_t	*load_image(char	*tpath)
 		printf("make sure path is a valid [.png] relative to executable\n");
 		ft_errmsg("Invalid texture path", 1);
 	}
-	if (image->width != 512 || image->width != image->height)
+	if (image->width != image->height)
 	{
 		printf("texture %s has invalid size.\n", tpath);
-		printf("Make sure the texture is a square with size 512x512.\n");
+		printf("Make sure the texture is a square.\n");
 		ft_errmsg("Invalid texture size", 1);
 	}
 	return (image);

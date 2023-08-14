@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/14 20:57:39 by yowazga           #+#    #+#             */
+/*   Updated: 2023/08/14 23:07:47 by zmoumen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <cub3d.h>
 
 int	check_wall(t_map *map, float x, float y)
@@ -7,7 +19,8 @@ int	check_wall(t_map *map, float x, float y)
 
 	x_map = (int)x / TILE_SIZE;
 	y_map = (int)y / TILE_SIZE;
-	if (x_map < 0 || x_map >= map->m_width || y_map < 0 || y_map >= map->m_lcount)
+	if (x_map < 0 || x_map >= map->m_width
+		|| y_map < 0 || y_map >= map->m_lcount)
 		return (1);
 	if (map->matrix[y_map][x_map] == '1')
 		return (0);
@@ -56,4 +69,3 @@ void	handl_err_pixl(t_game *cub)
 		cub->cast.wal_y -= 1;
 	}
 }
-

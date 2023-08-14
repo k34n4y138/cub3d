@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 17:21:45 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/11 23:49:50 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/14 23:05:59 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	validate_matrix_line(char	*mline, int lcount)
 	}
 }
 
-void	set_player(t_map *map, int	x, int y, char **pos)
+void	set_player(t_map *map, int x, int y, char **pos)
 {
 	if (map->player.x != 0)
 		ft_errmsg("Duplicate player position", 1);
@@ -59,15 +59,6 @@ void	set_player(t_map *map, int	x, int y, char **pos)
 	map->player.walkside = 0;
 	map->player.movespeed = 2;
 	map->player.rotationspeed = 2 * (M_PI / 180);
-}
-
-void	matrix_error(int y, int x, char *msg, t_map *map)
-{
-	int	errline;
-
-	errline = map->f_lcount - map->m_lcount + y + 1;
-	printf("Problem at y: %d, x: %d, Line %d\n", y, x, errline);
-	ft_errmsg(msg, 1);
 }
 
 void	validate_matrix_maze(t_map *map)
@@ -101,7 +92,7 @@ void	validate_matrix_maze(t_map *map)
 void	unionize_matrix_width(t_map *map)
 {
 	char		**traverser;
-	int		tlen;
+	int			tlen;
 
 	traverser = map->matrix;
 	map->m_width = 0;

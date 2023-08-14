@@ -1,4 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_recst_algo.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/14 20:58:04 by yowazga           #+#    #+#             */
+/*   Updated: 2023/08/14 23:07:59 by zmoumen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <cub3d.h>
+
+uint32_t	txt_pixel(mlx_texture_t *texture, int x, int y)
+{
+	uint32_t	p;
+
+	p = ((uint32_t *)texture->pixels)[texture->width * y + x];
+	return ((p & 0xFF000000) >> 24 | (p & 0x00FF0000) >> 8
+		| (p & 0x0000FF00) << 8 | (p & 0x000000FF) << 24);
+}
 
 void	init_hor_content(t_game *cub)
 {
@@ -39,7 +60,7 @@ void	handl_recast_horizontal(t_game *cub)
 	while (next_hor_x >= 0 && next_hor_x <= cub->map.m_width * TILE_SIZE
 		&& next_hor_y >= 0 && next_hor_y <= cub->map.m_lcount * TILE_SIZE)
 	{
-		if (!check_wall(&cub->map, next_hor_x,  next_hor_y - (cub->cast.is_up ? 1 : 0)))
+		if (!check_wall(&cub->map, next_hor_x, next_hor_y - cub->cast.is_up))
 		{
 			cub->cast.fondhorwal = 1;
 			cub->cast.horwallhilt_x = next_hor_x;
@@ -93,7 +114,7 @@ void	handl_recast_vertical(t_game *cub)
 	while (next_ver_x >= 0 && next_ver_x <= cub->map.m_width * TILE_SIZE
 		&& next_ver_y >= 0 && next_ver_y <= cub->map.m_lcount * TILE_SIZE)
 	{
-		if (!check_wall(&cub->map, next_ver_x - (cub->cast.is_left ? 1 : 0), next_ver_y))
+		if (!check_wall(&cub->map, next_ver_x - cub->cast.is_left, next_ver_y))
 		{
 			cub->cast.fondverwal = 1;
 			cub->cast.verwallhilt_x = next_ver_x;

@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_main.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/14 20:58:11 by yowazga           #+#    #+#             */
+/*   Updated: 2023/08/14 22:32:42 by zmoumen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	check_wall_in_move(t_game *cub)
 {
-	if ((!check_wall(&cub->map,cub->player.n_x, cub->player.y)
+	if ((!check_wall(&cub->map, cub->player.n_x, cub->player.y)
 			&& !check_wall(&cub->map, cub->player.x, cub->player.n_y)) \
 			|| !check_wall(&cub->map, cub->player.n_x, cub->player.n_y))
 		return (1);
 	return (0);
 }
 
-void	check_side(t_game *cub)
+int	check_side(t_game *cub)
 {
-	int mv;
+	int	mv;
 
 	mv = cub->player.movespeed;
 	if (fabs(cub->player.walkside) == 1)
@@ -23,7 +35,7 @@ void	check_side(t_game *cub)
 			cub->player.n_y = cub->player.y
 				- sin(cub->player.rorationangle - M_PI / 2) * mv;
 		}
-		else if (cub->player.walkside == -1)
+		if (cub->player.walkside == -1)
 		{
 			cub->player.n_x = cub->player.x
 				+ cos(cub->player.rorationangle - M_PI / 2) * mv;
@@ -31,11 +43,11 @@ void	check_side(t_game *cub)
 				+ sin(cub->player.rorationangle - M_PI / 2) * mv;
 		}
 		if (check_wall_in_move(cub))
-			return ;
+			return (0);
 		cub->player.x = cub->player.n_x;
 		cub->player.y = cub->player.n_y;
-		draw_content(cub);
 	}
+	return (1);
 }
 
 void	ft_hook(void *param)
@@ -52,7 +64,6 @@ void	ft_hook(void *param)
 		cub->player.rorationangle += cub->player.turndirection
 			* cub->player.rotationspeed;
 		cub->player.rorationangle = norm_angle(cub->player.rorationangle);
-		draw_content(cub);
 	}
 	if (fabs(cub->player.walkdirection) == 1)
 	{
@@ -62,9 +73,10 @@ void	ft_hook(void *param)
 			return ;
 		cub->player.x = cub->player.n_x;
 		cub->player.y = cub->player.n_y;
-		draw_content(cub);
 	}
-	check_side(cub);
+	if (check_side(cub) && (fabs(cub->player.turndirection)
+			|| fabs(cub->player.walkdirection) || fabs(cub->player.walkside)))
+		draw_content(cub);
 }
 
 void	check_press(mlx_key_data_t *keydata, t_game *cub)

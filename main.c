@@ -6,7 +6,7 @@
 /*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/29 17:29:00 by zmoumen           #+#    #+#             */
-/*   Updated: 2023/08/12 00:55:09 by zmoumen          ###   ########.fr       */
+/*   Updated: 2023/08/14 22:55:49 by zmoumen          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,30 @@ void	draw_content(t_game *cub)
 	init_image(cub);
 	draw_3d_map(cub);
 	draw_map(cub);
-	cast_all_rays(cub);
 	init_lin_player(cub, &arg);
 	draw_player(cub);
 }
 
 int	init_content(t_game *cub, char *path)
 {
+	cub->map = load_map(path);
+	cub->minimap_scale = 0.25;
+	if (cub->map.m_width > 25 || cub->map.m_lcount > 25)
+		cub->minimap_scale = 0.1;
+	cub->fov_angle = 60 * (M_PI / 180);
+	cub->num_rays = WIN_WIDTH / WALL_STRIP_WIDTH;
+	cub->player = cub->map.player;
 	cub->mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "CUB3D", true);
 	if (!cub->mlx)
-	{
-		puts(mlx_strerror(mlx_errno));
-		return (1);
-	}
+		exit(printf("Error: Fatal :%s\n", mlx_strerror(mlx_errno)));
 	cub->image = mlx_new_image(cub->mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!cub->image)
-	{
-		mlx_close_window(cub->mlx);
-		puts(mlx_strerror(mlx_errno));
-		return (1);
-	}
-	if (mlx_image_to_window(cub->mlx, cub->image, 0, 0) == -1)
-	{
-		mlx_close_window(cub->mlx);
-		puts(mlx_strerror(mlx_errno));
-		return (1);
-	}
-	cub->map = load_map(path);
-	cub->player = cub->map.player;
+	cub->minimap = mlx_new_image(cub->mlx,
+			cub->map.m_width * BLOCK_SIZE * cub->minimap_scale,
+			cub->map.m_lcount * BLOCK_SIZE * cub->minimap_scale);
+	if (!cub->image || ! cub->minimap
+		|| mlx_image_to_window(cub->mlx, cub->image, 0, 0) == -1
+		|| mlx_image_to_window(cub->mlx, cub->minimap, 0, 0) == -1)
+		exit(printf("Error: Fatal :%s\n", mlx_strerror(mlx_errno)));
 	return (0);
 }
 

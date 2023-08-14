@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   recast_algo.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/14 20:58:18 by yowazga           #+#    #+#             */
+/*   Updated: 2023/08/14 22:33:41 by zmoumen          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <cub3d.h>
 
 void	calculate_distances(t_game *cub)
@@ -56,15 +68,15 @@ void	init_image(t_game *cub)
 	int	y;
 
 	y = 0;
-	while (y < cub->image->height)
+	while (y < (int)cub->image->height)
 	{
 		x = 0;
-		while (x < cub->image->width)
+		while (x < (int)cub->image->width)
 		{
-			if (y < cub->image->height / 2)
-				mlx_put_pixel(cub->image, x++, y, ft_pixel(135, 206,250, 255));
-			else if (y < cub->image->height)
-				mlx_put_pixel(cub->image, x++, y, ft_pixel(46, 139,87, 255));
+			if (y <= (int)cub->image->height / 2)
+				mlx_put_pixel(cub->image, x++, y, cub->map.ceiling_c);
+			else if (y < (int)cub->image->height)
+				mlx_put_pixel(cub->image, x++, y, cub->map.floor_c);
 		}
 		y++;
 	}
@@ -74,28 +86,22 @@ void	draw_3d_map(t_game *cub)
 {
 	t_argline	arg;
 	float		rayangle;
-	int			color;
 	int			i;
 
 	i = -1;
-	rayangle = cub->player.rorationangle - (FOV_ANGLE / 2);
-	arg.distance = (WIN_WIDTH / 2) / tan(FOV_ANGLE / 2);
-	while (++i < NUM_RAYS)
+	rayangle = cub->player.rorationangle - (cub->fov_angle / 2);
+	arg.distance = (WIN_WIDTH / 2) / tan(cub->fov_angle / 2);
+	while (++i < cub->num_rays)
 	{
 		cast_ray(cub, rayangle);
-		arg.cor_dis = cub->cast.distance * cos(rayangle - cub->player.rorationangle);
+		arg.cor_dis = cub->cast.distance
+			* cos(rayangle - cub->player.rorationangle);
 		arg.wal_height = (TILE_SIZE / arg.cor_dis) * arg.distance;
-		if (arg.wal_height > WIN_HEIGHT)
-			arg.wal_height = WIN_HEIGHT;
 		arg.x0 = i;
 		arg.x1 = i;
 		arg.y0 = (WIN_HEIGHT / 2) - (arg.wal_height / 2);
 		arg.y1 = (WIN_HEIGHT / 2) + (arg.wal_height / 2);
-		if (cub->cast.washitvertical)
-			arg.color = ft_pixel(205, 133, 63, 255);
-		else
-			arg.color = ft_pixel(210, 105, 30, 255);
-		draw_line(cub, arg);
-		rayangle += FOV_ANGLE / NUM_RAYS;
+		draw_3d_recast(cub, arg);
+		rayangle += cub->fov_angle / cub->num_rays;
 	}
 }
