@@ -6,36 +6,37 @@
 #    By: zmoumen <zmoumen@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/30 21:42:20 by zmoumen           #+#    #+#              #
-#    Updated: 2023/08/14 20:57:21 by zmoumen          ###   ########.fr        #
+#    Updated: 2023/08/15 16:03:07 by zmoumen          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #~~~~~~~~~~~~~~[COMPILER]~~~~~~~~~~~~~~
 CC = cc
-CFLAGS =  -I./mlx42/include/MLX42 -I./libft -I. -Wall -Wextra -Werror 
+CFLAGS =  -I./mlx42/include/MLX42 -I./libft -Wall -Wextra -Werror 
 
 NAME = cub3D
+NAME_BONUS = cub3D_bonus
 all: $(NAME)
 
 SHELL = /bin/bash
 .PHONY = all
 #~~~~~~~~~~~~~~
 
-#~~~~~~~~~~~~~~[SOURCE FILES]~~~~~~~~~~~~~~
-SRC_MP_LDR = map_loader.c map_utils.c parse_matrix.c textures_utils/load_textures.c textures_utils/parse_textures.c
+#~~~~~~~~~~~~~~[MAND_SOURCE FILES]~~~~~~~~~~~~~~
+MAND_SRC_MP_LDR = map_loader.c map_utils.c parse_matrix.c textures_utils/load_textures.c textures_utils/parse_textures.c
 
-RAYCASTER_ENGINE_SRC = bresenham_algo.c draw_minimap.c recast_algo.c utils_recst_algo.c utils.c utils_main.c
-SRC = main.c $(addprefix map_loader/, $(SRC_MP_LDR)) $(addprefix raycaster_engine/, $(RAYCASTER_ENGINE_SRC))
+MAND_RAYCASTER_ENGINE_SRC = draw_3d_map.c recast_algo.c utils_recst_algo.c utils.c utils_main.c
+MAND_SRC = mandatory/main.c $(addprefix mandatory/map_loader/, $(MAND_SRC_MP_LDR)) $(addprefix mandatory/raycaster_engine/, $(MAND_RAYCASTER_ENGINE_SRC))
 #~~~~~~~~~~~~~~
 
-#~~~~~~~~~~~~~~[COMPILER OBJ/DEP FILES]~~~~~~~~~~~~~~
-OBJ_DIR = .mediators
-OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
-DEP_DIR = .mediators
-DEPS = $(addprefix $(DEP_DIR)/, $(SRC:.c=.d))
--include $(DEPS)
+#~~~~~~~~~~~~~~[BONUS SOURCE FILES]~~~~~~~~~~~~~~
+BNS_SRC_MP_LDR = map_loader_bonus.c map_utils_bonus.c parse_matrix_bonus.c textures_utils/load_textures_bonus.c textures_utils/parse_textures_bonus.c
+
+BNS_RAYCASTER_ENGINE_SRC = draw_3d_map_bonus.c draw_minimap_bonus.c recast_algo_bonus.c utils_recst_algo_bonus.c utils_bonus.c utils_main_bonus.c utils_main2_bonus.c
+BNS_SRC = bonus/main_bonus.c $(addprefix bonus/map_loader/, $(BNS_SRC_MP_LDR)) $(addprefix bonus/raycaster_engine/, $(BNS_RAYCASTER_ENGINE_SRC))
 #~~~~~~~~~~~~~~
+
 
 #~~~~~~~~~~~~~~[MLX AND ITS DEPS]~~~~~~~~~~~~~~
 MLX = mlx42/build/libmlx42.a
@@ -94,29 +95,27 @@ libft_re: libft_clean libft
 #~~~~~~~~~~~~~~
 
 #~~~~~~~~~~~~~~[CUB3D]~~~~~~~~~~~~~~
-$(NAME): $(MLX_CMAKE) $(MLX) $(GLFW) $(LIBFT) $(OBJ)
+$(NAME): $(MLX_CMAKE) $(MLX) $(GLFW) $(LIBFT) $(MAND_SRC) mandatory/cub3d.h
 	@echo "🏭🏗 Building executable"
-	@echo "📦 linking with $(GLFW)"
-	@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBFT) $(GLFW) -o $@
+	@$(CC) $(CFLAGS) $(MAND_SRC)  -I./mandatory $(MLX) $(LIBFT) $(GLFW) -o $@
 	@echo "✅🎮 Ready to Play"
 
-$(OBJ_DIR)/%.o: %.c
-	@echo "🏭🏗 Building $@"
-	@mkdir -p $(dir $@)
-	@mkdir -p $(dir $(DEP_DIR)/$*.d)
-	@$(CC) $(CFLAGS) -I. -c  $< -o $@ -MMD -MF $(DEP_DIR)/$*.d
-	@sleep 0.3;tput cuu1; tput el;
 #~~~~~~~~~~~~~~
 
+$(NAME_BONUS): $(MLX_CMAKE) $(MLX) $(GLFW) $(LIBFT) $(BNS_SRC) bonus/cub3d_bonus.h
+	@echo "🏭🏗 Building executable"
+	@$(CC) $(CFLAGS) $(BNS_SRC)  -I./bonus $(MLX) $(LIBFT) $(GLFW) -o $@
+	@echo "✅🎮 Ready to Play"
 
+bonus: $(NAME_BONUS)
 #~~~~~~~~~~~~~~[CLEANING]~~~~~~~~~~~~~~
 clean:
-	@echo "🚮  Cleaning folder from .o and .d files. Keeping executable and .a"
-	@rm -rf $(OBJ_DIR) $(DEP_DIR)
+	@echo "🚮  Removing executable libft .o"
+	@rm -rf $(NAME) $(NAME_BNS)
 	@make -C libft clean > /dev/null
 
 fclean: clean rm_mlx libft_clean
-	@echo "🚮  Removing executable and cleaning up libraries"
+	@echo "🚮  cleaning up libraries"
 	@rm -rf $(NAME)
 
 re_source_only: clean all
